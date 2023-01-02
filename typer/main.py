@@ -46,6 +46,13 @@ try:
 except ImportError:  # pragma: nocover
     rich = None  # type: ignore
 
+try:
+    import pydantic
+
+    from . import pydantic_utils
+except ImportError:  # pragma: nocover
+    pydantic = None  # type: ignore
+
 _original_except_hook = sys.excepthook
 _typer_developer_exception_attr_name = "__typer_developer_exception__"
 
@@ -550,10 +557,16 @@ def get_params_convertors_ctx_param_name_from_function(
             if lenient_issubclass(param.annotation, click.Context):
                 context_param_name = param_name
                 continue
+            if pydantic and lenient_issubclass(param.annotation, pydantic.BaseModel):
+                click_params, convertor = pydantic_utils.get_click_params(param)
+                for param in click_params:
+                    params.append(param)
+                    convertors[param.name] = convertor
+                continue
             click_param, convertor = get_click_param(param)
+            params.append(click_param)
             if convertor:
                 convertors[param_name] = convertor
-            params.append(click_param)
     return params, convertors, context_param_name
 
 
@@ -675,11 +688,18 @@ def get_callback(
         _rich_traceback_guard = pretty_exceptions_short  # noqa: F841
         for k, v in kwargs.items():
             if k in convertors:
-                use_params[k] = convertors[k](v)
+                convertor = convertors[k]
+                if pydantic and isinstance(convertor, pydantic_utils.ModelBuilder):
+                    callback_key, converted_value = convertor(k, v)
+                    use_params[callback_key] = converted_value
+                    use_params.pop(k)
+                else:
+                    use_params[k] = convertor(v)
             else:
                 use_params[k] = v
         if context_param_name:
             use_params[context_param_name] = click.get_current_context()
+
         return callback(**use_params)  # type: ignore
 
     update_wrapper(wrapper, callback)

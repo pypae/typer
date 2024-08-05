@@ -3,10 +3,13 @@
 </style>
 
 <p align="center">
-  <a href="https://typer.tiangolo.com"><img src="https://typer.tiangolo.com/img/logo-margin/logo-margin-vector.svg#only-light" alt="Typer"></a>
-<!-- only-mkdocs -->
-  <a href="https://typer.tiangolo.com"><img src="img/logo-margin/logo-margin-white-vector.svg#only-dark" alt="Typer"></a>
-<!-- /only-mkdocs -->
+    <a href="https://typer.tiangolo.com">
+    <picture style="color-scheme: light">
+      <source media="(prefers-color-scheme: dark)" srcset="https://typer.tiangolo.com/img/logo-margin/logo-margin-white-vector.svg">
+      <source media="(prefers-color-scheme: light)" srcset="https://typer.tiangolo.com/img/logo-margin/logo-margin-vector.svg">
+      <img src="https://typer.tiangolo.com/img/logo-margin/logo-margin-vector.svg" alt="Typer">
+    </picture>
+  </a>
 </p>
 <p align="center">
     <em>Typer, build great CLIs. Easy to code. Based on Python type hints.</em>
@@ -39,12 +42,12 @@ It's also a command line tool to run scripts, automatically converting them to C
 
 The key features are:
 
-* **Intuitive to write**: Great editor support. <abbr title="also known as auto-complete, autocompletion, IntelliSense">Completion</abbr> everywhere. Less time debugging. Designed to be easy to use and learn. Less time reading docs.
-* **Easy to use**: It's easy to use for the final users. Automatic help, and automatic completion for all shells.
-* **Short**: Minimize code duplication. Multiple features from each parameter declaration. Fewer bugs.
-* **Start simple**: The simplest example adds only 2 lines of code to your app: **1 import, 1 function call**.
-* **Grow large**: Grow in complexity as much as you want, create arbitrarily complex trees of commands and groups of subcommands, with options and arguments.
-* **Run scripts**: Typer includes a `typer` command/program that you can use to run scripts, automatically converting them to CLIs, even if they don't use Typer internally.
+- **Intuitive to write**: Great editor support. <abbr title="also known as auto-complete, autocompletion, IntelliSense">Completion</abbr> everywhere. Less time debugging. Designed to be easy to use and learn. Less time reading docs.
+- **Easy to use**: It's easy to use for the final users. Automatic help, and automatic completion for all shells.
+- **Short**: Minimize code duplication. Multiple features from each parameter declaration. Fewer bugs.
+- **Start simple**: The simplest example adds only 2 lines of code to your app: **1 import, 1 function call**.
+- **Grow large**: Grow in complexity as much as you want, create arbitrarily complex trees of commands and groups of subcommands, with options and arguments.
+- **Run scripts**: Typer includes a `typer` command/program that you can use to run scripts, automatically converting them to CLIs, even if they don't use Typer internally.
 
 ## FastAPI of CLIs
 
@@ -66,7 +69,7 @@ Successfully installed typer rich shellingham
 
 ### The absolute minimum
 
-* Create a file `main.py` with:
+- Create a file `main.py` with:
 
 ```Python
 def main(name: str):
@@ -214,10 +217,10 @@ if __name__ == "__main__":
 
 And that will:
 
-* Explicitly create a `typer.Typer` app.
-    * The previous `typer.run` actually creates one implicitly for you.
-* Add two subcommands with `@app.command()`.
-* Execute the `app()` itself, as if it was a function (instead of `typer.run`).
+- Explicitly create a `typer.Typer` app.
+  - The previous `typer.run` actually creates one implicitly for you.
+- Add two subcommands with `@app.command()`.
+- Execute the `app()` itself, as if it was a function (instead of `typer.run`).
 
 ### Run the upgraded example
 
@@ -324,7 +327,7 @@ Goodbye Ms. Camila. Have a good day.
 
 ### Recap
 
-In summary, you declare **once** the types of parameters (*CLI arguments* and *CLI options*) as function parameters.
+In summary, you declare **once** the types of parameters (_CLI arguments_ and _CLI options_) as function parameters.
 
 You do that with standard modern Python types.
 
@@ -358,10 +361,10 @@ For a more complete example including more features, see the <a href="https://ty
 
 By default it also comes with extra standard dependencies:
 
-* <a href="https://rich.readthedocs.io/en/stable/index.html" class="external-link" target="_blank"><code>rich</code></a>: to show nicely formatted errors automatically.
-* <a href="https://github.com/sarugaku/shellingham" class="external-link" target="_blank"><code>shellingham</code></a>: to automatically detect the current shell when installing completion.
-    * With `shellingham` you can just use `--install-completion`.
-    * Without `shellingham`, you have to pass the name of the shell to install completion for, e.g. `--install-completion bash`.
+- <a href="https://rich.readthedocs.io/en/stable/index.html" class="external-link" target="_blank"><code>rich</code></a>: to show nicely formatted errors automatically.
+- <a href="https://github.com/sarugaku/shellingham" class="external-link" target="_blank"><code>shellingham</code></a>: to automatically detect the current shell when installing completion.
+  - With `shellingham` you can just use `--install-completion`.
+  - Without `shellingham`, you have to pass the name of the shell to install completion for, e.g. `--install-completion bash`.
 
 ### `typer-slim`
 
